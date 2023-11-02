@@ -116,6 +116,7 @@
             • Initial release
         </PackageReleaseNotes>
         <PackageIcon>hangfire.console.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/IdentityStream/Hangfire.Console</RepositoryUrl>
