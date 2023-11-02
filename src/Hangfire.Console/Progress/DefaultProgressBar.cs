@@ -14,7 +14,7 @@ internal class DefaultProgressBar : IProgressBar
 
     private readonly string _progressBarId;
 
-    private readonly int _precision;
+    private readonly int _digits;
 
     private string? _color;
 
@@ -22,7 +22,7 @@ internal class DefaultProgressBar : IProgressBar
 
     private double _value;
 
-    internal DefaultProgressBar(ConsoleContext context, string progressBarId, string? name, string? color, int precision)
+    internal DefaultProgressBar(ConsoleContext context, string progressBarId, string? name, string? color, int digits)
     {
         if (string.IsNullOrEmpty(progressBarId))
         {
@@ -31,7 +31,7 @@ internal class DefaultProgressBar : IProgressBar
 
         _context = context ?? throw new ArgumentNullException(nameof(context));
         _progressBarId = progressBarId;
-        _precision = precision;
+        _digits = digits;
         _name = string.IsNullOrEmpty(name) ? null : name;
         _color = string.IsNullOrEmpty(color) ? null : color;
         _value = -1;
@@ -44,7 +44,7 @@ internal class DefaultProgressBar : IProgressBar
 
     public void SetValue(double value)
     {
-        value = Math.Round(value, _precision);
+        value = Math.Round(value, _digits);
 
         if (value < 0 || value > 100)
         {
