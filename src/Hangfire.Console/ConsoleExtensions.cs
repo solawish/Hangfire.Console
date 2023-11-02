@@ -54,8 +54,9 @@ public static class ConsoleExtensions
     /// <param name="context">Context</param>
     /// <param name="value">Initial value</param>
     /// <param name="color">Progress bar color</param>
-    public static IProgressBar WriteProgressBar(this PerformContext context, int value = 0, ConsoleTextColor? color = null)
-        => ConsoleContext.FromPerformContext(context)?.WriteProgressBar(null, value, color) ?? new NoOpProgressBar();
+    /// <param name="digits">The number of fractional digits or decimal places to use for the progress bar</param>
+    public static IProgressBar WriteProgressBar(this PerformContext context, int value = 0, ConsoleTextColor? color = null, int digits = 0)
+        => ConsoleContext.FromPerformContext(context)?.WriteProgressBar(null, value, color, digits) ?? new NoOpProgressBar();
 
     /// <summary>
     ///     Adds an updateable named progress bar to console.
@@ -64,8 +65,9 @@ public static class ConsoleExtensions
     /// <param name="name">Name</param>
     /// <param name="value">Initial value</param>
     /// <param name="color">Progress bar color</param>
-    public static IProgressBar WriteProgressBar(this PerformContext context, string name, double value = 0, ConsoleTextColor? color = null)
-        => ConsoleContext.FromPerformContext(context)?.WriteProgressBar(name, value, color) ?? new NoOpProgressBar();
+    /// <param name="digits">The number of fractional digits or decimal places to use for the progress bar</param>
+    public static IProgressBar WriteProgressBar(this PerformContext context, string name, double value = 0, ConsoleTextColor? color = null, int digits = 0)
+        => ConsoleContext.FromPerformContext(context)?.WriteProgressBar(name, value, color, digits) ?? new NoOpProgressBar();
 
     /// <summary>
     ///     Adds a string to console.

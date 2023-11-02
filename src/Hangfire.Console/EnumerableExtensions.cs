@@ -66,7 +66,8 @@ public static class EnumerableExtensions
     /// <param name="context">Perform context</param>
     /// <param name="color">Progress bar color</param>
     /// <param name="count">Item count</param>
-    public static IEnumerable<T> WithProgress<T>(this IEnumerable<T> enumerable, PerformContext context, ConsoleTextColor? color = null, int count = -1) => WithProgress(enumerable, context.WriteProgressBar(0, color), count);
+    /// <param name="digits">The number of fractional digits or decimal places to use for the progress bar</param>
+    public static IEnumerable<T> WithProgress<T>(this IEnumerable<T> enumerable, PerformContext context, ConsoleTextColor? color = null, int count = -1, int digits = 0) => WithProgress(enumerable, context.WriteProgressBar(0, color, digits), count);
 
     /// <summary>
     ///     Returns ab <see cref="IEnumerable" /> reporting enumeration progress.
@@ -75,7 +76,8 @@ public static class EnumerableExtensions
     /// <param name="context">Perform context</param>
     /// <param name="color">Progress bar color</param>
     /// <param name="count">Item count</param>
-    public static IEnumerable WithProgress(this IEnumerable enumerable, PerformContext context, ConsoleTextColor? color = null, int count = -1) => WithProgress(enumerable, context.WriteProgressBar(0, color), count);
+    /// <param name="digits">The number of fractional digits or decimal places to use for the progress bar</param>
+    public static IEnumerable WithProgress(this IEnumerable enumerable, PerformContext context, ConsoleTextColor? color = null, int count = -1, int digits = 0) => WithProgress(enumerable, context.WriteProgressBar(0, color, digits), count);
 
     /// <summary>
     ///     Returns an <see cref="IEnumerable{T}" /> reporting enumeration progress.
@@ -86,7 +88,8 @@ public static class EnumerableExtensions
     /// <param name="name">Progress bar name</param>
     /// <param name="color">Progress bar color</param>
     /// <param name="count">Item count</param>
-    public static IEnumerable<T> WithProgress<T>(this IEnumerable<T> enumerable, PerformContext context, string name, ConsoleTextColor? color = null, int count = -1) => WithProgress(enumerable, context.WriteProgressBar(name, 0, color), count);
+    /// <param name="digits">The number of fractional digits or decimal places to use for the progress bar</param>
+    public static IEnumerable<T> WithProgress<T>(this IEnumerable<T> enumerable, PerformContext context, string name, ConsoleTextColor? color = null, int count = -1, int digits = 0) => WithProgress(enumerable, context.WriteProgressBar(name, 0, color, digits), count);
 
     /// <summary>
     ///     Returns ab <see cref="IEnumerable" /> reporting enumeration progress.
@@ -96,5 +99,6 @@ public static class EnumerableExtensions
     /// <param name="name">Progress bar name</param>
     /// <param name="color">Progress bar color</param>
     /// <param name="count">Item count</param>
-    public static IEnumerable WithProgress(this IEnumerable enumerable, PerformContext context, string name, ConsoleTextColor? color = null, int count = -1) => WithProgress(enumerable, context.WriteProgressBar(name, 0, color), count);
+    /// <param name="digits">The number of fractional digits or decimal places to use for the progress bar</param>
+    public static IEnumerable WithProgress(this IEnumerable enumerable, PerformContext context, string name, ConsoleTextColor? color = null, int count = -1, int digits = 0) => WithProgress(enumerable, context.WriteProgressBar(name, 0, color, digits), count);
 }
