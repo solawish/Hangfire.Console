@@ -9,15 +9,17 @@ namespace Hangfire.Console.Monitoring;
 internal class ConsoleApi : IConsoleApi
 {
     private readonly IConsoleStorage _storage;
+    private readonly ConsoleOptions _consoleOptions;
 
-    public ConsoleApi(IStorageConnection connection)
+    public ConsoleApi(IStorageConnection connection, ConsoleOptions consoleOptions)
     {
         if (connection == null)
         {
             throw new ArgumentNullException(nameof(connection));
         }
 
-        _storage = new ConsoleStorage(connection);
+        _consoleOptions = consoleOptions;
+        _storage = _consoleOptions.UseConsoleHub ? new ConsoleHubStorage(connection) : new ConsoleStorage(connection);
     }
 
     public void Dispose()

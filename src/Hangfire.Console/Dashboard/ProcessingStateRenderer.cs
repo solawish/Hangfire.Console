@@ -62,7 +62,9 @@ internal class ProcessingStateRenderer
         builder.Append("<div class=\"console-area\">");
         builder.AppendFormat("<div class=\"console\" data-id=\"{0}\">", consoleId);
 
-        using (var storage = new ConsoleStorage(page.Storage.GetConnection()))
+        using (IConsoleStorage storage = _options.UseConsoleHub 
+            ? new ConsoleHubStorage(page.Storage.GetConnection()) 
+            : new ConsoleStorage(page.Storage.GetConnection()))
         {
             ConsoleRenderer.RenderLineBuffer(builder, storage, consoleId, 0);
         }

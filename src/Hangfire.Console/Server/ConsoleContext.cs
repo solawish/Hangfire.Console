@@ -107,4 +107,14 @@ internal class ConsoleContext
 
         _storage.Expire(_consoleId, ttl);
     }
+
+    public void Flush()
+    {
+        _storage.Flush(_consoleId);
+    }   
+
+    public void Dispose()
+    {
+        _storage.Dispose();
+    }
 }

@@ -14,14 +14,20 @@ public static class JobStorageExtensions
     ///     Returns an instance of <see cref="IConsoleApi" />.
     /// </summary>
     /// <param name="storage">Job storage instance</param>
+    /// <param name="consoleOptions"></param>
     /// <returns>Console API instance</returns>
-    public static IConsoleApi GetConsoleApi(this JobStorage storage)
+    public static IConsoleApi GetConsoleApi(this JobStorage storage, ConsoleOptions consoleOptions)
     {
         if (storage == null)
         {
             throw new ArgumentNullException(nameof(storage));
         }
 
-        return new ConsoleApi(storage.GetConnection());
+        if (consoleOptions == null)
+        {
+            throw new ArgumentNullException(nameof(consoleOptions));
+        }
+
+        return new ConsoleApi(storage.GetConnection(), consoleOptions);
     }
 }

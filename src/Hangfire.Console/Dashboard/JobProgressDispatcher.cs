@@ -46,7 +46,7 @@ internal class JobProgressDispatcher : IDashboardDispatcher
             // there are some jobs to process
 
             using var connection = context.Storage.GetConnection();
-            using var storage = new ConsoleStorage(connection);
+            using IConsoleStorage storage = _options.UseConsoleHub ? new ConsoleHubStorage(connection) : new ConsoleStorage(connection);
 
             foreach (var jobId in jobIds)
             {
