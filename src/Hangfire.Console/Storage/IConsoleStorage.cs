@@ -56,4 +56,17 @@ internal interface IConsoleStorage : IDisposable
     /// </summary>
     /// <param name="consoleId">Console identifier</param>
     StateData? GetState(ConsoleId consoleId);
+
+    /// <summary>
+    ///     Flush console data.
+    /// </summary>
+    /// <param name="consoleId"></param>
+    void Flush(ConsoleId consoleId);
+
+    /// <summary>
+    ///     Get Progress for a console
+    /// </summary>
+    /// <param name="consoleId"></param>
+    /// <returns></returns>
+    double? GetProgress(ConsoleId consoleId);
 }

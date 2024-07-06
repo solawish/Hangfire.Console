@@ -181,4 +181,26 @@ public class ConsoleContextFacts
         _storage.Verify(x => x.GetConsoleTtl(It.IsAny<ConsoleId>()));
         _storage.Verify(x => x.Expire(It.IsAny<ConsoleId>(), It.IsAny<TimeSpan>()));
     }
+
+    [Fact]
+    public void Flush_ReallyFlush()
+    {
+        var consoleId = new ConsoleId("1", new DateTime(2016, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+        var context = new ConsoleContext(consoleId, _storage.Object);
+
+        context.Flush();
+
+        _storage.Verify(x => x.Flush(consoleId));
+    }
+
+    [Fact]
+    public void Dispose_ReallyDispose()
+    {
+        var consoleId = new ConsoleId("1", new DateTime(2016, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+        var context = new ConsoleContext(consoleId, _storage.Object);
+
+        context.Dispose();
+
+        _storage.Verify(x => x.Dispose());
+    }
 }

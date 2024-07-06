@@ -246,4 +246,9 @@ internal class ConsoleStorage : IConsoleStorage
             return null;
         }
     }
+
+    public void Flush(ConsoleId consoleId)
+    {
+        throw new NotImplementedException();
+    }
 }

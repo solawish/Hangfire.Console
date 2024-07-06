@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Hangfire.Common;
 using Hangfire.Console.Serialization;
+using Hangfire.Console.Server;
 using Hangfire.Console.Storage;
 using Hangfire.Dashboard;
 using Hangfire.States;
@@ -46,7 +47,9 @@ internal class JobProgressDispatcher : IDashboardDispatcher
             // there are some jobs to process
 
             using var connection = context.Storage.GetConnection();
-            using var storage = new ConsoleStorage(connection);
+            using IConsoleStorage storage = _options.UseConsoleHub 
+                ? new ConsoleHubStorage(connection, new ConsoleHub()) 
+                : new ConsoleStorage(connection);
 
             foreach (var jobId in jobIds)
             {

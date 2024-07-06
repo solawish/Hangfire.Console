@@ -39,11 +39,19 @@ internal class ConsoleServerFilter : IServerFilter
 
         filterContext.Items["ConsoleContext"] = new ConsoleContext(
             new ConsoleId(filterContext.BackgroundJob.Id, startedAt),
-            new ConsoleStorage(filterContext.Connection));
+            _options.UseConsoleHub 
+                ? new ConsoleHubStorage(filterContext.Connection, new ConsoleHub())
+                : new ConsoleStorage(filterContext.Connection));
     }
 
     public void OnPerformed(PerformedContext filterContext)
     {
+        var consoleContext = ConsoleContext.FromPerformContext(filterContext);
+        if (consoleContext is null)
+        {
+            return;
+        }
+
         if (_options.FollowJobRetentionPolicy)
         {
             // Console sessions follow parent job expiration.
@@ -54,12 +62,20 @@ internal class ConsoleServerFilter : IServerFilter
             // If anything is written to console after the job was deleted, it won't get a correct expiration assigned.
 
             // Need to re-apply expiration to prevent those records from becoming eternal garbage.
-            ConsoleContext.FromPerformContext(filterContext)?.FixExpiration();
+            consoleContext.FixExpiration();
         }
         else
         {
-            ConsoleContext.FromPerformContext(filterContext)?.Expire(_options.ExpireIn);
+            consoleContext.Expire(_options.ExpireIn);
         }
+
+        if (_options.UseConsoleHub)
+        {
+            // Flush ConsoleLog
+            consoleContext.Flush();
+        }
+
+        consoleContext.Dispose();
 
         // remove console context to prevent further writes from filters
         filterContext.Items.Remove("ConsoleContext");

@@ -49,7 +49,7 @@ public static class GlobalConfigurationExtensions
 
         // register dispatchers to serve console data
         DashboardRoutes.Routes.Add("/console/progress", new JobProgressDispatcher(options));
-        DashboardRoutes.Routes.Add("/console/([0-9a-f]{11}.+)", new ConsoleDispatcher());
+        DashboardRoutes.Routes.Add("/console/([0-9a-f]{11}.+)", new ConsoleDispatcher(options));
 
         // register additional dispatchers for CSS and JS
         var assembly = typeof(ConsoleRenderer).GetTypeInfo().Assembly;

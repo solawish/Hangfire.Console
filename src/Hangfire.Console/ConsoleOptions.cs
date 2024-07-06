@@ -40,6 +40,11 @@ public class ConsoleOptions
     /// </summary>
     public string TimestampColor { get; set; } = "#00aad7";
 
+    /// <summary>
+    /// If set to true, console log will use cache and log to db after job performed to reduce db transaction count.
+    /// </summary>
+    public bool UseConsoleHub { get; set; } = false;
+
     internal void Validate(string paramName)
     {
         if (ExpireIn < TimeSpan.FromMinutes(1))
