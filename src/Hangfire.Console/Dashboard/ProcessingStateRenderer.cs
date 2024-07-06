@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Hangfire.Common;
 using Hangfire.Console.Serialization;
+using Hangfire.Console.Server;
 using Hangfire.Console.Storage;
 using Hangfire.Dashboard;
 using Hangfire.Dashboard.Extensions;
@@ -63,7 +64,7 @@ internal class ProcessingStateRenderer
         builder.AppendFormat("<div class=\"console\" data-id=\"{0}\">", consoleId);
 
         using (IConsoleStorage storage = _options.UseConsoleHub 
-            ? new ConsoleHubStorage(page.Storage.GetConnection()) 
+            ? new ConsoleHubStorage(page.Storage.GetConnection(), new ConsoleHub()) 
             : new ConsoleStorage(page.Storage.GetConnection()))
         {
             ConsoleRenderer.RenderLineBuffer(builder, storage, consoleId, 0);

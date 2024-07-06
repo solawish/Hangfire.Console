@@ -17,11 +17,18 @@ internal class ConsoleHubStorage : IConsoleStorage
     // maybe this one be released every time?
     private readonly JobStorageConnection _connection;
 
-    public ConsoleHubStorage(IStorageConnection connection)
+    private readonly IConsoleHub _consoleHub;
+
+    public ConsoleHubStorage(IStorageConnection connection, IConsoleHub consoleHub)
     {
-        if (connection == null)
+        if (connection is null)
         {
             throw new ArgumentNullException(nameof(connection));
+        }
+
+        if (consoleHub is null)
+        {
+            throw new ArgumentNullException(nameof(consoleHub));
         }
 
         if (connection is not JobStorageConnection jobStorageConnection)
@@ -30,6 +37,7 @@ internal class ConsoleHubStorage : IConsoleStorage
         }
 
         _connection = jobStorageConnection;
+        _consoleHub = consoleHub;
     }
 
     public void AddLine(ConsoleId consoleId, ConsoleLine line)
@@ -48,7 +56,7 @@ internal class ConsoleHubStorage : IConsoleStorage
         {
             throw new ArgumentException("Cannot add reference directly", nameof(line));
         }
-        ConsoleHub.AddLine(consoleId, line);
+        _consoleHub.AddLine(consoleId, line);
     }
 
     public void Dispose()
@@ -73,7 +81,7 @@ internal class ConsoleHubStorage : IConsoleStorage
 
     public void Flush(ConsoleId consoleId)
     {
-        var lines = ConsoleHub.GetLines(consoleId);
+        var lines = _consoleHub.GetLines(consoleId);
         using var transaction = _connection.CreateWriteTransaction();
 
         if (transaction is not JobStorageTransaction)
@@ -127,7 +135,7 @@ internal class ConsoleHubStorage : IConsoleStorage
         }
 
         transaction.Commit();
-        ConsoleHub.Flush(consoleId);
+        _consoleHub.Flush(consoleId);
     }
 
     public TimeSpan GetConsoleTtl(ConsoleId consoleId)
@@ -147,11 +155,11 @@ internal class ConsoleHubStorage : IConsoleStorage
             throw new ArgumentNullException(nameof(consoleId));
         }
 
-        var result = ConsoleHub.GetLines(consoleId).Count();
+        var result = _consoleHub.GetLines(consoleId).Count();
 
         if (result == 0)
         {
-            // maybe flush           
+            // maybe already flush           
             result = (int)_connection.GetSetCount(consoleId.GetSetKey());
         }
 
@@ -174,12 +182,12 @@ internal class ConsoleHubStorage : IConsoleStorage
 
         var useOldKeys = false;
 
-        var items = ConsoleHub.GetLines(consoleId).Skip(start).Take(end - start + 1).ToList();
+        var items = _consoleHub.GetLines(consoleId).Skip(start).Take(end - start + 1).ToList();
 
         if (items.Count == 0)
         {
             items = _connection.GetRangeFromSet(consoleId.GetSetKey(), start, end)
-                .Select(x => SerializationHelper.Deserialize<ConsoleLine>(x))
+                ?.Select(x => SerializationHelper.Deserialize<ConsoleLine>(x))
                 .ToList();            
         }
 
@@ -229,7 +237,7 @@ internal class ConsoleHubStorage : IConsoleStorage
             throw new ArgumentNullException(nameof(consoleId));
         }
 
-        var progress = ConsoleHub.GetLines(consoleId)
+        var progress = _consoleHub.GetLines(consoleId)
             .FirstOrDefault(x => x.ProgressValue.HasValue && x.Message == "1")
             ?.ProgressValue.Value.ToString(CultureInfo.InvariantCulture);
 
@@ -269,6 +277,6 @@ internal class ConsoleHubStorage : IConsoleStorage
             throw new ArgumentNullException(nameof(consoleId));
         }
         
-        ConsoleHub.Init(consoleId);
+        _consoleHub.Init(consoleId);
     }
 }

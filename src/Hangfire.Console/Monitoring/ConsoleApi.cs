@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Hangfire.Console.Serialization;
+using Hangfire.Console.Server;
 using Hangfire.Console.Storage;
 using Hangfire.Storage;
 
@@ -19,7 +20,9 @@ internal class ConsoleApi : IConsoleApi
         }
 
         _consoleOptions = consoleOptions;
-        _storage = _consoleOptions.UseConsoleHub ? new ConsoleHubStorage(connection) : new ConsoleStorage(connection);
+        _storage = _consoleOptions.UseConsoleHub 
+            ? new ConsoleHubStorage(connection, new ConsoleHub()) 
+            : new ConsoleStorage(connection);
     }
 
     public void Dispose()

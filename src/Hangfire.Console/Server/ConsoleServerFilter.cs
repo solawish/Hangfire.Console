@@ -40,7 +40,7 @@ internal class ConsoleServerFilter : IServerFilter
         filterContext.Items["ConsoleContext"] = new ConsoleContext(
             new ConsoleId(filterContext.BackgroundJob.Id, startedAt),
             _options.UseConsoleHub 
-                ? new ConsoleHubStorage(filterContext.Connection)
+                ? new ConsoleHubStorage(filterContext.Connection, new ConsoleHub())
                 : new ConsoleStorage(filterContext.Connection));
     }
 

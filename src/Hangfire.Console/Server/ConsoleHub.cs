@@ -9,11 +9,11 @@ using System.Text;
 
 namespace Hangfire.Console.Server;
 
-internal class ConsoleHub
+internal class ConsoleHub : IConsoleHub
 {
-    private static readonly ConcurrentDictionary<ConsoleId, BlockingCollection<ConsoleLine>> Hub = new();
+    public static readonly ConcurrentDictionary<ConsoleId, BlockingCollection<ConsoleLine>> Hub = new();
 
-    public static void Init(ConsoleId consoleId)
+    public void Init(ConsoleId consoleId)
     {
         if (Hub.ContainsKey(consoleId))
         {
@@ -22,7 +22,7 @@ internal class ConsoleHub
         Hub.TryAdd(consoleId, new BlockingCollection<ConsoleLine>());
     }
 
-    public static void AddLine(ConsoleId consoleId, ConsoleLine consoleLine)
+    public void AddLine(ConsoleId consoleId, ConsoleLine consoleLine)
     {
         if (!Hub.ContainsKey(consoleId))
         {
@@ -31,7 +31,7 @@ internal class ConsoleHub
         Hub[consoleId].Add(consoleLine);
     }
 
-    public static IEnumerable<ConsoleLine> GetLines(ConsoleId consoleId)
+    public IEnumerable<ConsoleLine> GetLines(ConsoleId consoleId)
     {
         if (!Hub.ContainsKey(consoleId))
         {
@@ -41,7 +41,7 @@ internal class ConsoleHub
         return Hub[consoleId];
     }
 
-    public static void Flush(ConsoleId consoleId)
+    public void Flush(ConsoleId consoleId)
     {
         if (!Hub.ContainsKey(consoleId))
         {

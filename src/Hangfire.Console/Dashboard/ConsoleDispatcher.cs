@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 using Hangfire.Console.Serialization;
+using Hangfire.Console.Server;
 using Hangfire.Console.Storage;
 using Hangfire.Dashboard;
 
@@ -39,7 +40,7 @@ internal class ConsoleDispatcher : IDashboardDispatcher
 
         var buffer = new StringBuilder();
         using (IConsoleStorage storage = _options.UseConsoleHub 
-            ? new ConsoleHubStorage(context.Storage.GetConnection()) 
+            ? new ConsoleHubStorage(context.Storage.GetConnection(), new ConsoleHub()) 
             : new ConsoleStorage(context.Storage.GetConnection()))
         {
             ConsoleRenderer.RenderLineBuffer(buffer, storage, consoleId, start);
