@@ -1,7 +1,7 @@
-# IdentityStream.Hangfire.Console
+# Solawish.Hangfire.Console
 
-[![Build Status](https://github.com/IdentityStream/Hangfire.Console/actions/workflows/dotnet.yml/badge.svg)](https://github.com/IdentityStream/Hangfire.Console/actions/workflows/dotnet.yml)
-[![NuGet](https://img.shields.io/nuget/v/IdentityStream.Hangfire.Console.svg)](https://www.nuget.org/packages/IdentityStream.Hangfire.Console/)
+[![Build Status](https://github.com/solawish/Hangfire.Console/actions/workflows/dotnet.yml/badge.svg)](https://github.com/solawish/Hangfire.Console/actions/workflows/dotnet.yml)
+[![NuGet](https://img.shields.io/nuget/v/Solawish.Hangfire.Console.svg)](https://www.nuget.org/packages/Solawish.Hangfire.Console/)
 ![MIT License](https://img.shields.io/badge/license-MIT-orange.svg)
 
 Inspired by AppVeyor, Hangfire.Console provides a console-like logging experience for your jobs.
@@ -138,7 +138,8 @@ the extension method).
 ## License
 
 Copyright (c) 2016 Alexey Skalozub  
-Copyright (c) 2023 IdentityStream AS
+Copyright (c) 2023 IdentityStream AS  
+Copyright (c) 2024 solawish
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
