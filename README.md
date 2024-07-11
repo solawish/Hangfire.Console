@@ -6,6 +6,19 @@
 
 Inspired by AppVeyor, Hangfire.Console provides a console-like logging experience for your jobs.
 
+## Add Async Log To Reduce Db Loading
+
+Use Below Code To Enable Async Log.
+```c#
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddHangfire(config =>
+    {
+        config.UseConsole(new ConsoleOptions { UseConsoleHub = true });
+    });
+}
+```
+
 > [!IMPORTANT]
 > As [Hangfire.Console](https://github.com/pieceofsummer/Hangfire.Console) seems to be abandoned, this is a fork with some crucial bugfixes.
 > If, at some point in the future, the main project comes back to life, these fixes should probably be merged back upstream.
