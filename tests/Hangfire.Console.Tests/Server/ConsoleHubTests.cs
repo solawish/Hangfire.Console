@@ -13,7 +13,7 @@ public class ConsoleHubTests
     public void Init_ShouldAddConsoleIdToHub()
     {
         // Arrange
-        var consoleId = new ConsoleId("jobId", DateTime.UtcNow);
+        var consoleId = new ConsoleId("jobId1", DateTime.UtcNow);
 
         // Act
         var consoleHub = new ConsoleHub();
@@ -27,7 +27,7 @@ public class ConsoleHubTests
     public void Init_ShouldThrowArgumentException_WhenConsoleIdExist()
     {
         // Arrange
-        var consoleId = new ConsoleId("jobId", DateTime.UtcNow);
+        var consoleId = new ConsoleId("jobId2", DateTime.UtcNow);
 
         // Act
         var consoleHub = new ConsoleHub();
@@ -41,7 +41,7 @@ public class ConsoleHubTests
     public void AddLine_ShouldAddConsoleLineToHub()
     {
         // Arrange
-        var consoleId = new ConsoleId("jobId", DateTime.UtcNow);
+        var consoleId = new ConsoleId("jobId3", DateTime.UtcNow);
         var consoleLine = new ConsoleLine { Message = "test" };
 
         // Act
@@ -57,7 +57,7 @@ public class ConsoleHubTests
     public void AddLine_ShouldThrowArgumentException_WhenConsoleIdMismatch()
     {
         // Arrange
-        var consoleId = new ConsoleId("jobId", DateTime.UtcNow);
+        var consoleId = new ConsoleId("jobId4", DateTime.UtcNow);
         var consoleLine = new ConsoleLine { Message = "test" };
 
         // Act
@@ -71,7 +71,7 @@ public class ConsoleHubTests
     public void GetLines_ShouldReturnConsoleLinesFromHub()
     {
         // Arrange
-        var consoleId = new ConsoleId("jobId", DateTime.UtcNow);
+        var consoleId = new ConsoleId("jobId5", DateTime.UtcNow);
         var consoleLine1 = new ConsoleLine { Message = "line1" };
         var consoleLine2 = new ConsoleLine { Message = "line2" };
 
@@ -92,7 +92,7 @@ public class ConsoleHubTests
     public void GetLines_ShouldReturnEmpty_WhenConsoleIdMismatch()
     {
         // Arrange
-        var consoleId = new ConsoleId("jobId", DateTime.UtcNow);
+        var consoleId = new ConsoleId("jobId6", DateTime.UtcNow);
 
         // Act
         var consoleHub = new ConsoleHub();
@@ -106,7 +106,7 @@ public class ConsoleHubTests
     public void Flush_ShouldRemoveConsoleIdFromHub()
     {
         // Arrange
-        var consoleId = new ConsoleId("jobId", DateTime.UtcNow);
+        var consoleId = new ConsoleId("jobId7", DateTime.UtcNow);
 
         // Act
         var consoleHub = new ConsoleHub();
@@ -121,7 +121,7 @@ public class ConsoleHubTests
     public void Flush_ShouldThrowArgumentException_WhenConsoleIdMismatch()
     {
         // Arrange
-        var consoleId = new ConsoleId("jobId", DateTime.UtcNow);
+        var consoleId = new ConsoleId("jobId8", DateTime.UtcNow);
 
         // Act
         var consoleHub = new ConsoleHub();
