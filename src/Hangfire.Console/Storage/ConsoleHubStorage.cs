@@ -1,4 +1,5 @@
 ﻿using Hangfire.Common;
+using Hangfire.Console.Constants;
 using Hangfire.Console.Serialization;
 using Hangfire.Console.Server;
 using Hangfire.Storage;
@@ -278,5 +279,10 @@ internal class ConsoleHubStorage : IConsoleStorage
         }
         
         _consoleHub.Init(consoleId);
+
+        // Add ip 
+        using var transaction = (JobStorageTransaction)_connection.CreateWriteTransaction();
+        transaction.SetRangeInHash(consoleId.GetHashKey(), new[] { new KeyValuePair<string, string>(HashKey.JobServerIp, IpExtensions.GetIp()) });
+        transaction.Commit();
     }
 }
